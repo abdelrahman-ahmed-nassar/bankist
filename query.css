@@ -2,7 +2,7 @@
   .app {
     display: flex;
     flex-direction: column;
-    padding-bottom: 120px;
+    padding-bottom: 32px;
   }
   /* header */
   nav {

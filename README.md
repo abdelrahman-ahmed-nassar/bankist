@@ -26,10 +26,10 @@ Bank transactions
 
 ### DEMO 
 
-![screen shot](banksit.png)
+![screen shot](bankist.png)
 
 
-![screen shot](banksit-login.png)
+![screen shot](bankist-login.png)
 
 # [Live Demo](https://abdelrhman-ahmed-kamal.github.io/banksit/) 
 
