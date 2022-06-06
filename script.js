@@ -112,7 +112,7 @@ const formatMovementDate = function (date, locale) {
 const formatCur = function (value, locale, currency) {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
-    currency: currency,
+    currency,
   }).format(value);
 };
 
@@ -144,9 +144,7 @@ const displayMovements = function (acc, sort = false) {
     // create the html code
     const html = `
     <div class="movements__row">
-      <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
+      <div class="movements__type movements__type--${type}">${type}</div>
     <div class="movements__date">${displayDate}</div>
       <div class="movements__value">${formattedMov}</div>
     </div>
@@ -421,111 +419,3 @@ btnSort.addEventListener('click', function (e) {
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });
-
-/*
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-// array.from()
-
-// the result of querySelectorAll is node-list
-// we convert into array
-// we used the callback function
-labelBalance.addEventListener('click', function () {
-  const movementUI = Array.from(
-    document.querySelectorAll('.movements_value'),
-    function (el) {
-      return +el.textContent.replace('€', '');
-    }
-  );
-  console.log(movementUI);
-
-  // other way for converting node-list into an array
-  const movementUI2 = [...querySelectorAll('.movements_value')];
-  // but now we will do mapping manually
-});
-
-/////////////////////////////////////////////////
-
-//*   array practice
-
-// 1. calc all the deposits in the bank
-const bankDepositSum = accounts
-  .flatMap(function (acc, i, obj) {
-    return acc.movements;
-  })
-  .filter(mov => mov > 0)
-  .reduce((acc, cur) => acc + cur, 0);
-console.log(bankDepositSum);
-
-// 2. calc how many deposits more 1000
-
-const numDeposits1000 = accounts
-  .flatMap(function (acc, i, obj) {
-    return acc.movements;
-  })
-  .filter(mov => mov > 1000).length;
-
-console.log(numDeposits1000);
-
-// other way
-
-const numDeposits1000V2 = accounts
-  .flatMap(function (acc, i, obj) {
-    return acc.movements;
-  })
-  .reduce((acc, cur) => (cur >= 1000 ? ++acc : acc), 0);
-
-console.log(numDeposits1000);
-
-// 3. create new object contain the sum of the deposits and the withdrawals
-
-const { deposits, withdrawals } = accounts
-  .flatMap(acc => acc.movements)
-  .reduce(
-    (sums, cur) => {
-      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
-      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
-      return sums;
-    },
-    { deposits: 0, withdrawals: 0 }
-  );
-console.log(deposits, withdrawals);
-
-// 4. convert any string to titleCase
-
-// this is a nice title => This Is a Nice Title
-
-const convertTitleFace = function (title) {
-  const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with', 'and'];
-  const titleCase = title
-    .toLowerCase()
-    .split(' ')
-    .map(word =>
-      exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
-    )
-    .join(' ');
-  return titleCase;
-};
-
-console.log(convertTitleFace('this is a nice title but'));
-
-///////////////////////////////////////////////
-
-//*           remainder operator
-// colorize the movements row be even or odd
-labelBalance.addEventListener('click', function () {
-  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
-    if ((i + 1) % 2 === 0) row.style.backgroundColor = 'red';
-    if ((i + 1) % 2 === 1) row.style.backgroundColor = 'blue';
-  });
-});
-
-/*
-[...document.querySelectorAll('.movements_row')].forEach(function (mov, i) {
-    if (i % 2 === 0) {
-      row.style.backgroundColor = 'red';
-    }
-    if (i % 3 === 0) row.style;
-  });
-*/
